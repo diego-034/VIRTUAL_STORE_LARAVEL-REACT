@@ -19,8 +19,8 @@ class CreateProductosTable extends Migration
             $table->string('Descripcion',300);
             $table->decimal('Valor',11,2);
             $table->string('Imagen',100);
-            $table->unsignedBigInteger('IdTienda');
-            $table->foreign('IdTienda')->references('ID')->on('users');
+            $table->unsignedInteger('IdTienda');
+            $table->foreign('IdTienda')->references('ID')->on('tiendas');
             $table->timestamps();
         });
     }

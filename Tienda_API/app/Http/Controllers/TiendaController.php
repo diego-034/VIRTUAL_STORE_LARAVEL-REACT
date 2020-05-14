@@ -35,7 +35,7 @@ class TiendaController extends Controller
         }
         $input = $request->all();
         $data = Tienda::create($input);
-        return $this->SendResponse($data,"ingreso exitoso");
+        return $this->SendResponse($data,"ingreso exitoso de tienda");
     }
 
     /**

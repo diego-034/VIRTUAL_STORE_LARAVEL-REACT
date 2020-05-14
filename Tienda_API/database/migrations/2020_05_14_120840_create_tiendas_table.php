@@ -14,7 +14,7 @@ class CreateTiendasTable extends Migration
     public function up()
     {
         Schema::create('tiendas', function (Blueprint $table) {
-            $table->id('ID');
+            $table->bigInteger('ID')->unique();
             $table->string('Nombre',50);
             $table->date('FechaApertura');
             $table->timestamps();

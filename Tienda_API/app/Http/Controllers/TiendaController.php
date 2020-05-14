@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Tienda;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class TiendaController extends Controller
 {
@@ -18,16 +19,6 @@ class TiendaController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -35,7 +26,16 @@ class TiendaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'Nombre' => 'required|string',
+            'FechaApertura' => 'required|date'
+        ]);
+        if($validator->fails()){
+            return $this->SendError("error de validación",$validator->errors(),422);
+        }
+        $input = $request->all();
+        $data = Tienda::create($input);
+        return $this->SendResponse($data,"ingreso exitoso");
     }
 
     /**
@@ -45,17 +45,6 @@ class TiendaController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show(Tienda $tienda)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Tienda  $tienda
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Tienda $tienda)
     {
         //
     }

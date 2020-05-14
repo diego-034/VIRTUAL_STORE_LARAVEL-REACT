@@ -15,7 +15,12 @@ class TiendaController extends Controller
      */
     public function index()
     {
-        //
+        $stores = Tienda::all();
+        $data['stores'] = $stores;
+        if ($data['stores'] == null) {
+            return $this->SendError("error al consultar tiendas");
+        }
+        return $this->SendResponse($data, "tiendas existentes");
     }
 
     /**
@@ -30,12 +35,12 @@ class TiendaController extends Controller
             'Nombre' => 'required|string',
             'FechaApertura' => 'required|date'
         ]);
-        if($validator->fails()){
-            return $this->SendError("error de validación",$validator->errors(),422);
+        if ($validator->fails()) {
+            return $this->SendError("error de validación", $validator->errors(), 422);
         }
         $input = $request->all();
         $data = Tienda::create($input);
-        return $this->SendResponse($data,"ingreso exitoso de tienda");
+        return $this->SendResponse($data, "ingreso exitoso de tienda");
     }
 
     /**
@@ -56,9 +61,23 @@ class TiendaController extends Controller
      * @param  \App\Tienda  $tienda
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Tienda $tienda)
+    public function update( Request $request, Tienda $tienda)
     {
-        //
+        $store = $tienda;
+        if ($store == null) {
+            return $this->SendError("error en los datos", ["la tienda no existe"], 422);
+        }
+        $validator = Validator::make($request->all(), [
+            'Nombre' => 'required|string',
+            'FechaApertura' => 'date'
+        ]);
+        if ($validator->fails()) {
+            return $this->SendError("error de validación", $validator->errors(), 422);
+        }
+        $store->Nombre = $request->get("Nombre");
+        $store->FechaApertura = $request->get("FechaApertura");
+        $store->save();
+        return $this->SendResponse($store, "actualización exitosa");
     }
 
     /**
@@ -69,6 +88,11 @@ class TiendaController extends Controller
      */
     public function destroy(Tienda $tienda)
     {
-        //
+        $store = Tienda::find($tienda);
+        if ($store == null) {
+            return $this->SendError("error en los datos", ["la tienda no existe"], 422);
+        }
+        $store->each->delete();
+        return $this->SendResponse($store, "eliminación exitosa de la tienda");
     }
 }

@@ -15,7 +15,12 @@ class ProductoController extends Controller
      */
     public function index()
     {
-        //
+        $product = Producto::all();
+        $data['product'] = $product;
+        if ($data['product'] == null) {
+            return $this->SendError("error al consultar los productos");
+        }
+        return $this->SendResponse($data, "productos existentes");
     }
 
 
@@ -30,17 +35,17 @@ class ProductoController extends Controller
         $validator = Validator::make($request->all(), [
             'SKU' => 'required|integer',
             'Nombre' => 'required|string',
-            'Descripcion'=> 'required|string',
-            'Valor'=> 'required|numeric',
-            'Imagen'=> 'required|string',
-            'IdTienda'=> 'required|integer',
+            'Descripcion' => 'required|string',
+            'Valor' => 'required|numeric',
+            'Imagen' => 'required|string',
+            'IdTienda' => 'required|integer',
         ]);
-        if($validator->fails()){
-            return $this->SendError("error de validación",$validator->errors(),422);
+        if ($validator->fails()) {
+            return $this->SendError("error de validación", $validator->errors(), 422);
         }
         $input = $request->all();
         $data = Producto::create($input);
-        return $this->SendResponse($data,"ingreso exitoso de producto");
+        return $this->SendResponse($data, "ingreso exitoso de producto");
     }
 
     /**
@@ -61,9 +66,29 @@ class ProductoController extends Controller
      * @param  \App\Producto  $producto
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Producto $producto)
+    public function update( Request $request, Producto $producto)
     {
-        //
+        $product = $producto;
+        if ($product == null) {
+            return $this->SendError("error en los datos", ["el producto no existe"], 422);
+        }
+        $validator = Validator::make($request->all(), [
+            'Nombre' => 'required|string',
+            'Descripcion' => 'required|string',
+            'Valor' => 'required|numeric',
+            'Imagen' => 'required|string',
+            'IdTienda' => 'required|integer',
+        ]);
+        if ($validator->fails()) {
+            return $this->SendError("error de validación", $validator->errors(), 422);
+        }
+        $product->Nombre = $request->get("Nombre");
+        $product->Descripcion = $request->get("Descripcion");
+        $product->Valor = $request->get("Valor");
+        $product->Imagen = $request->get("Imagen");
+        $product->IdTienda = $request->get("IdTienda");
+        $product->save();
+        return $this->SendResponse($product, "actualización exitosa");
     }
 
     /**
@@ -74,6 +99,11 @@ class ProductoController extends Controller
      */
     public function destroy(Producto $producto)
     {
-        //
+        $product = Producto::find($producto);
+        if ($product == null) {
+            return $this->SendError("error en los datos", ["el producto no existe"], 422);
+        }
+        $product->each->delete();
+        return $this->SendResponse($product, "producto eliminado exitosamente");
     }
 }

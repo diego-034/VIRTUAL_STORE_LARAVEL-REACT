@@ -20,7 +20,7 @@ class Controller extends BaseController
         ];
         return response()->json($response, 200);
     }
-    
+
     public function SendError($error, $errorMessage = [], $code = 404)
     {
         $response = [

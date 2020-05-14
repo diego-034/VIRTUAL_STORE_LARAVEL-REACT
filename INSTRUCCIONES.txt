@@ -1,0 +1,26 @@
+***********************REQUISITOS************************
++ PHP >= 7.2.5
++ Verificar requerimientos para instalar laravel
++ Clonar este repositorio
+*********************************************************
+_________________________________________________________
+INSTRUCCIONES PARA INSTALACIÓN DE LOS RECURSOS NECESARIOS
+	     PARA CONSUMIR LA API DE LARAVEL
+_________________________________________________________
+
+*********************************************************
+1.Clonar el repositorio de GitHub
+
+2.Instalar las dependencias de Composer
+	a.Ir a la página oficial y descargar el 
+	  ejecutable(https://getcomposer.org/download/)
+	b.instalar laravel con composer con el comando
+	  composer global require laravel/installer
+	c.ir a la ruta del repositorio clonado en la
+	  carpeta ________________________
+	d.ejecutar el comando composer install
+	e.verificar si no hay errores
+
+3.Abrir la consola e ir a la carpeta _________________
+4.Ejecutar la creacion de la base de datos con el comando
+  _____________________________________________________

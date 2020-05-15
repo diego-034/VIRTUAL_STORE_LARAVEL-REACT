@@ -66,9 +66,9 @@ class ProductoController extends Controller
      * @param  \App\Producto  $producto
      * @return \Illuminate\Http\Response
      */
-    public function update( Request $request, Producto $producto)
+    public function update( Request $request,$productoId)
     {
-        $product = $producto;
+        $product = Producto::find($productoId);
         if ($product == null) {
             return $this->SendError("error en los datos", ["el producto no existe"], 422);
         }
@@ -97,13 +97,13 @@ class ProductoController extends Controller
      * @param  \App\Producto  $producto
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Producto $producto)
+    public function destroy($productoId)
     {
-        $product = Producto::find($producto);
+        $product = Producto::find($productoId);
         if ($product == null) {
             return $this->SendError("error en los datos", ["el producto no existe"], 422);
         }
-        $product->each->delete();
+        $product->delete();
         return $this->SendResponse($product, "producto eliminado exitosamente");
     }
 }

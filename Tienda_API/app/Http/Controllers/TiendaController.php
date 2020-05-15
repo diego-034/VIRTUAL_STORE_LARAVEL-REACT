@@ -61,9 +61,9 @@ class TiendaController extends Controller
      * @param  \App\Tienda  $tienda
      * @return \Illuminate\Http\Response
      */
-    public function update( Request $request, Tienda $tienda)
+    public function update( Request $request, $tiendaId)
     {
-        $store = $tienda;
+        $store = Tienda::find($tiendaId);
         if ($store == null) {
             return $this->SendError("error en los datos", ["la tienda no existe"], 422);
         }
@@ -86,13 +86,13 @@ class TiendaController extends Controller
      * @param  \App\Tienda  $tienda
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Tienda $tienda)
+    public function destroy($tiendaId)
     {
-        $store = Tienda::find($tienda);
+        $store = Tienda::find($tiendaId);
         if ($store == null) {
             return $this->SendError("error en los datos", ["la tienda no existe"], 422);
         }
-        $store->each->delete();
+        $store->delete();
         return $this->SendResponse($store, "eliminación exitosa de la tienda");
     }
 }

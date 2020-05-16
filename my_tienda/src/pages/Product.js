@@ -13,21 +13,41 @@ class Product extends Component {
     };
   }
   componentDidMount() {
-    return fetch(url+this.props.match.params.storeId)
+    return fetch(url + this.props.match.params.storeId)
       .then((res) => res.json())
       .then(
         (result) => {
-          this.setState(result.data =! null? { products: result.data}: null);
+          this.setState(
+            (result.data = !null ? { products: result.data } : null)
+          );
           console.log(this.state.products);
         },
         (error) => {}
       );
   }
-
+  deleteProduct(value) {
+    fetch(url + value, {
+      method: "DELETE",
+    })
+      .then((res) => res.json())
+      .then(
+        (result) => {
+          console.log(result);
+          window.location.reload(true);
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+  }
+  updateProduct(value) {
+    let { history } = this.props;
+    history.push("/editarProducto/" + value);
+  }
   render() {
     let datas = this.state.products;
-    let products= null;
-    if(datas != null){
+    let products = null;
+    if (datas != null) {
       products = datas.map((product) => (
         <div className="card  mb-3 product shadow-lg">
           <img src={Image} className="card-img-top" />
@@ -37,22 +57,36 @@ class Product extends Component {
             <p className="card-text">Descripcion: {product.Descripcion}</p>
             <p className="card-text">Valor: {product.Valor}</p>
             <p className="card-text">
-              <small className="text-muted">Id Tienda: {product.IdTienda}</small>
+              <small className="text-muted">
+                Id Tienda: {product.IdTienda}
+              </small>
             </p>
-            <button className="btn btn-danger">Eliminar</button>
-            <button className="btn btn-primary ml-2">Editar</button>
+            <button
+              className="btn btn-danger"
+              onClick={() => this.deleteProduct(product.SKU)}
+            >
+              Eliminar
+            </button>
+            <button
+              className="btn btn-primary ml-2"
+              onClick={() => this.updateProduct(product.SKU)}
+            >
+              Editar
+            </button>
           </div>
         </div>
       ));
     }
     return (
       <div>
-      <h1 className="font-weight-bold">Productos</h1>
-      <div className="row">
-        <div className="col-md-10">{products}</div>
-        <div className="col-md-2"><Button/></div>
+        <h1 className="font-weight-bold">Productos</h1>
+        <div className="row">
+          <div className="col-md-10">{products}</div>
+          <div className="col-md-2">
+            <Button />
+          </div>
+        </div>
       </div>
-    </div>
     );
   }
 }

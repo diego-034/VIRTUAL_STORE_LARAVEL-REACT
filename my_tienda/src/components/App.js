@@ -6,6 +6,8 @@ import Home from "../pages/Home";
 import Product from "../pages/Product";
 import RegisterStore from "../pages/RegisterStore";
 import UpdateStore from "../pages/UpdateStore";
+import RegisterProduct from "../pages/RegisterProduct";
+import UpdateProduct from "../pages/UpdateProduct";
 
 function App() {
   return (
@@ -16,6 +18,8 @@ function App() {
           <Route exact path="/products/:storeId" component={Product} />
           <Route exact path="/registroTienda" component={RegisterStore} />
           <Route exact path="/tienda/:storeId" component={UpdateStore} />
+          <Route exact path="/registroProducto/:storeId" component={RegisterProduct} />
+          <Route exact path="/editarProducto/:productId" component={UpdateProduct} />
         </Switch>
       </BrowserRouter>
     </div>

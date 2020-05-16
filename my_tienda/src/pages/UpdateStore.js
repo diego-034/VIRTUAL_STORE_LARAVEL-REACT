@@ -53,7 +53,7 @@ class UpdateStore extends Component {
   render() {
     return (
       <div>
-        <h1 className="font-weight-bold">Registro de Tienda</h1>
+        <h1 className="font-weight-bold">Actualizar Tienda</h1>
         <div className="card width mb-3 shadow-lg mt-4">
           <div className="row no-gutters">
             <div className="col-md-4">

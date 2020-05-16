@@ -17,6 +17,10 @@ class Store extends Component {
     let { history } = this.props;
     history.push("/products/" + value);
   }
+  updateStore(value){
+    let { history } = this.props;
+    history.push("/tienda/" + value);
+  }
   deleteStore(value) {
     fetch(url + "/" + value, {
       method: "DELETE",
@@ -68,7 +72,12 @@ class Store extends Component {
                 >
                   Eliminar
                 </button>
-                <button className="btn btn-primary ml-2">Editar</button>
+                <button
+                  className="btn btn-primary ml-2"
+                  onClick={() => this.updateStore(store.ID)}
+                >
+                  Editar
+                </button>
                 <button
                   className="btn btn-success ml-2"
                   onClick={() => this.activateRoute(store.ID)}

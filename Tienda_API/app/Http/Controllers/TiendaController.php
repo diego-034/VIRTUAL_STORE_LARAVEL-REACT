@@ -70,7 +70,7 @@ class TiendaController extends Controller
         }
         $validator = Validator::make($request->all(), [
             'Nombre' => 'required|string',
-            'FechaApertura' => 'date'
+            'FechaApertura' => 'required|date'
         ]);
         if ($validator->fails()) {
             return $this->SendError("error de validación", $validator->errors(), 422);

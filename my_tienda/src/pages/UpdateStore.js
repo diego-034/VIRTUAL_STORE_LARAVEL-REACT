@@ -3,7 +3,7 @@ import Image from "../components/global/images/store.jpg";
 import "../components/global/css/RegisterStore.css";
 //Componentes
 
-class RegisterStore extends Component {
+class UpdateStore extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -11,16 +11,19 @@ class RegisterStore extends Component {
       date: null,
     };
   }
-  addStore() {
-    let nameData = document.getElementById("name").value;
-    let dateData = document.getElementById("date").value;
-    let url="http://127.0.0.1:8000/api/tienda";
-    let data = new FormData();
-    data.append('Nombre',nameData);
-    data.append('FechaApertura',dateData);
+  updateStore() {
+    let nameData = document.getElementById("nameUpdate").value;
+    let dateData = document.getElementById("dateUpdate").value;
+    let url = "http://127.0.0.1:8000/api/tienda/"+this.props.match.params.storeId;
     fetch(url, {
-      method: "POST",
-      body: data
+      method: "PUT",
+      body: JSON.stringify({
+        Nombre: nameData,
+        FechaApertura: dateData
+      }),
+      headers:{
+        'Content-Type': 'application/json; charset=UTF-8'
+    },
     })
       .then((res) => res.json())
       .then(
@@ -47,17 +50,17 @@ class RegisterStore extends Component {
               <div className="card-body">
                 <div className="form-group">
                   <label className="card-text size">Nombre: </label>
-                  <input className="form-control" id="name" />
+                  <input className="form-control" id="nameUpdate" />
                 </div>
                 <div className="form-group">
                   <label className="card-text size">Fecha de Apertura:</label>
-                  <input className="form-control" type="date" id="date" />
+                  <input className="form-control" type="date" id="dateUpdate" />
                 </div>
                 <button
                   className="btn btn-success mt-4"
-                  onClick={() => this.addStore()}
+                  onClick={() => this.updateStore()}
                 >
-                  Agregar
+                  Actualizar
                 </button>
               </div>
             </div>
@@ -67,4 +70,4 @@ class RegisterStore extends Component {
     );
   }
 }
-export default RegisterStore;
+export default UpdateStore;

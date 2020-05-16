@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Tienda;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 
 class TiendaController extends Controller
 {
@@ -92,6 +93,7 @@ class TiendaController extends Controller
         if ($store == null) {
             return $this->SendError("error en los datos", ["la tienda no existe"], 422);
         }
+        DB::table('productos')->where('IdTienda','=',$tiendaId)->delete();
         $store->delete();
         return $this->SendResponse($store, "eliminación exitosa de la tienda");
     }

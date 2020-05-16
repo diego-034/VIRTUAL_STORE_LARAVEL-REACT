@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Producto;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 
 class ProductoController extends Controller
 {
@@ -54,9 +55,13 @@ class ProductoController extends Controller
      * @param  \App\Producto  $producto
      * @return \Illuminate\Http\Response
      */
-    public function show(Producto $producto)
+    public function show($storeId)
     {
-        //
+        $products = DB::table('productos')->where('IdTienda','=',$storeId)->get();
+        if($products->count() == 0){
+            return $this->SendError("no hay productos", ["no hay porductos en esta tienda"], 422);
+        }
+        return $this->SendResponse($products, "Productos de la tienda");
     }
 
     /**

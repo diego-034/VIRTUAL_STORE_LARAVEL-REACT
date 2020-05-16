@@ -44,6 +44,11 @@ class ProductoController extends Controller
         if ($validator->fails()) {
             return $this->SendError("error de validación", $validator->errors(), 422);
         }
+        $image = $request->SKU;
+        $oldOrigin = $request->Imagen;
+        $newOrigin = "C:\Users\DIEGO\Documents\TRADA_SOLUTIONS_PRUEBA\Tienda_API\public";
+        copy($oldOrigin,$newOrigin);
+        $request['Imagen'] = $newOrigin;
         $input = $request->all();
         $data = Producto::create($input);
         return $this->SendResponse($data, "ingreso exitoso de producto");

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Image from "../components/global/images/store.jpg";
 import "../components/global/css/RegisterStore.css";
+
 //Componentes
 
 class RegisterStore extends Component {
@@ -14,13 +15,13 @@ class RegisterStore extends Component {
   addStore() {
     let nameData = document.getElementById("name").value;
     let dateData = document.getElementById("date").value;
-    let url="http://127.0.0.1:8000/api/tienda";
+    let url = "http://127.0.0.1:8000/api/tienda";
     let data = new FormData();
-    data.append('Nombre',nameData);
-    data.append('FechaApertura',dateData);
+    data.append("Nombre", nameData);
+    data.append("FechaApertura", dateData);
     fetch(url, {
       method: "POST",
-      body: data
+      body: data,
     })
       .then((res) => res.json())
       .then(

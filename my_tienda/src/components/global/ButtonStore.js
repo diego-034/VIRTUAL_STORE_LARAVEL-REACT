@@ -1,12 +1,20 @@
-import React from "react";
+import React, { Component } from "react";
 import "./css/ButtonStore.css";
+import { withRouter } from "react-router-dom";
 
-function ButtonStore() {
-  return (
-    <div className="Button mt-3">
-     <button className="btn btn-primary">Agregar Tienda</button>
-    </div>
-  );
+class ButtonStore extends Component {
+  activateRoute(){
+    let { history } = this.props;
+    history.push("/registroTienda");
+  }
+  render(){
+    return (
+      <div className="Button mt-3">
+       <button className="btn btn-primary" onClick={()=> this.activateRoute()}>Agregar Tienda</button>
+      </div>
+    );
+  }
+  
 }
 
-export default ButtonStore;
+export default withRouter(ButtonStore);

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Image from "../components/global/images/store.jpg";
 import "../components/global/css/RegisterStore.css";
 //Componentes
-
+const url = "http://127.0.0.1:8000/api/tienda/";
 class UpdateStore extends Component {
   constructor(props) {
     super(props);
@@ -11,11 +11,24 @@ class UpdateStore extends Component {
       date: null,
     };
   }
+  
+  componentDidMount() {
+    return fetch(url+this.props.match.params.storeId)
+      .then((res) => res.json())
+      .then(
+        (result) => {
+          this.setState(result.data =! null? { name: result.data.Nombre, date: result.data.FechaApertura}: null);
+          console.log(this.state);
+          document.getElementById("nameUpdate").value=this.state.name;
+          document.getElementById("dateUpdate").value=this.state.date;
+        },
+        (error) => {}
+      );
+  }
   updateStore() {
     let nameData = document.getElementById("nameUpdate").value;
     let dateData = document.getElementById("dateUpdate").value;
-    let url = "http://127.0.0.1:8000/api/tienda/"+this.props.match.params.storeId;
-    fetch(url, {
+    fetch(url+this.props.match.params.storeId, {
       method: "PUT",
       body: JSON.stringify({
         Nombre: nameData,

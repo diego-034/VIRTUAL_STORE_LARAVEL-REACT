@@ -50,9 +50,14 @@ class TiendaController extends Controller
      * @param  \App\Tienda  $tienda
      * @return \Illuminate\Http\Response
      */
-    public function show(Tienda $tienda)
+    public function show($storeId)
     {
-        //
+        $store = Tienda::find($storeId);
+        if($store == null){
+            return $this->SendError("error al buscar tienda",["Error de busquedad 
+            , tienda no encontrada"],422);
+        }
+        return $this->SendResponse($store,"tienda encontrada");
     }
 
     /**

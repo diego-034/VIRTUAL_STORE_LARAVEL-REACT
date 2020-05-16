@@ -19,3 +19,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });*/
 Route::apiResource('tienda','TiendaController');
 Route::apiResource('producto','ProductoController');
+Route::get('producto/consult/{productId}','ProductoController@consultProduct');
+

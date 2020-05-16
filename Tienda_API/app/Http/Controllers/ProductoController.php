@@ -55,11 +55,19 @@ class ProductoController extends Controller
      * @param  \App\Producto  $producto
      * @return \Illuminate\Http\Response
      */
+    public function consultProduct($productId)
+    {
+        $product = Producto::find($productId);
+        if($product == null){
+            return $this->SendError("no existe el producto", ["no hay productos en esta tienda"], 422);
+        }
+        return $this->SendResponse($product, "Producto");
+    }
     public function show($storeId)
     {
         $products = DB::table('productos')->where('IdTienda','=',$storeId)->get();
         if($products->count() == 0){
-            return $this->SendError("no hay productos", ["no hay porductos en esta tienda"], 422);
+            return $this->SendError("no hay productos", ["no hay productos en esta tienda"], 422);
         }
         return $this->SendResponse($products, "Productos de la tienda");
     }
@@ -81,8 +89,7 @@ class ProductoController extends Controller
             'Nombre' => 'required|string',
             'Descripcion' => 'required|string',
             'Valor' => 'required|numeric',
-            'Imagen' => 'required|string',
-            'IdTienda' => 'required|integer',
+            'Imagen' => 'required|string'
         ]);
         if ($validator->fails()) {
             return $this->SendError("error de validación", $validator->errors(), 422);
@@ -91,7 +98,6 @@ class ProductoController extends Controller
         $product->Descripcion = $request->get("Descripcion");
         $product->Valor = $request->get("Valor");
         $product->Imagen = $request->get("Imagen");
-        $product->IdTienda = $request->get("IdTienda");
         $product->save();
         return $this->SendResponse($product, "actualización exitosa");
     }

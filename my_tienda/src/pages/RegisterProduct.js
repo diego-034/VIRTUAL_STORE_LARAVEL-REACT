@@ -17,7 +17,7 @@ class RegisterStore extends Component {
     let skuData = document.getElementById("SKU").value;
     let descriptionData = document.getElementById("description").value;
     let valueData = document.getElementById("value").value;
-    let idStoreData = document.getElementById("idStore").value;
+    let idStoreData = this.props.match.params.storeId;
     let url = "http://127.0.0.1:8000/api/producto";
     let data = new FormData();
     data.append("SKU", skuData);
@@ -26,7 +26,6 @@ class RegisterStore extends Component {
     data.append("Valor", valueData);
     data.append("Imagen", imageData);
     data.append("IdTienda", idStoreData);
-    console.log(imageData);
     fetch(url, {
       method: "POST",
       body: data,
@@ -36,7 +35,7 @@ class RegisterStore extends Component {
         (result) => {
           console.log(result);
           let { history } = this.props;
-          history.push("/");
+          history.push("/products/" + this.props.match.params.storeId);
         },
         (error) => {
           console.log(error);
@@ -72,7 +71,11 @@ class RegisterStore extends Component {
                 </div>
                 <div className="form-group">
                   <label className="card-text size">Descripcion: </label>
-                  <input className="form-control" type="text" id="description" />
+                  <input
+                    className="form-control"
+                    type="text"
+                    id="description"
+                  />
                 </div>
                 <div className="form-group">
                   <label className="card-text size">Valor </label>
@@ -81,15 +84,6 @@ class RegisterStore extends Component {
                     type="number"
                     min="0"
                     id="value"
-                  />
-                </div>
-                <div className="form-group">
-                  <label className="card-text size">Id Tienda:</label>
-                  <input
-                    className="form-control"
-                    type="number"
-                    min="0"
-                    id="idStore"
                   />
                 </div>
                 <button

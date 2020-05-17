@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Image from "../components/global/images/logo.svg";
 import "../components/global/css/RegisterProduct.css";
 //Componentes
+
 const url = "http://127.0.0.1:8000/api/producto";
 class RegisterStore extends Component {
   constructor(props) {
@@ -14,6 +15,7 @@ class RegisterStore extends Component {
       storeId: null,
     };
   }
+  
 
   componentDidMount() {
     return fetch(url + "/consult/" + this.props.match.params.productId)
@@ -37,22 +39,23 @@ class RegisterStore extends Component {
         (error) => {}
       );
   }
+  cancel(){
+    let { history } = this.props;
+    history.push("/products/" + this.state.storeId);
+  }
   updateProduct() {
-    let imageData = document.getElementById("image").value;
+    let imageData = document.getElementById("image").files[0];
     let nameData = document.getElementById("name").value;
     let descriptionData = document.getElementById("description").value;
     let valueData = document.getElementById("value").value;
+    let data = new FormData();    
+    data.append("Nombre", nameData);
+    data.append("Descripcion", descriptionData);
+    data.append("Valor", valueData);
+    data.append("Imagen", imageData);
     fetch(url+"/"+this.props.match.params.productId, {
-        method: "PUT",
-        body: JSON.stringify({
-          Nombre: nameData,
-          Descripcion: descriptionData,
-          Valor: valueData,
-          Imagen: imageData
-        }),
-        headers:{
-          'Content-Type': 'application/json; charset=UTF-8'
-      },
+        method: "POST",
+        body: data
       })
       .then((res) => res.json())
       .then(
@@ -106,6 +109,12 @@ class RegisterStore extends Component {
                   onClick={() => this.updateProduct()}
                 >
                   Actualizar
+                </button>
+                <button
+                  className="btn btn-danger mt-4 ml-2"
+                  onClick={() => this.cancel()}
+                >
+                  Cancelar
                 </button>
               </div>
             </div>

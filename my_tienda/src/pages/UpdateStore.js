@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import Image from "../components/global/images/store.jpg";
 import "../components/global/css/RegisterStore.css";
 //Componentes
+import ButtonCancel from "../components/global/ButtonCancelStore";
+
 const url = "http://127.0.0.1:8000/api/tienda/";
 class UpdateStore extends Component {
   constructor(props) {
@@ -69,12 +71,14 @@ class UpdateStore extends Component {
                   <label className="card-text size">Fecha de Apertura:</label>
                   <input className="form-control" type="date" id="dateUpdate" />
                 </div>
+                
                 <button
                   className="btn btn-success mt-4"
                   onClick={() => this.updateStore()}
                 >
                   Actualizar
                 </button>
+                <ButtonCancel/>
               </div>
             </div>
           </div>

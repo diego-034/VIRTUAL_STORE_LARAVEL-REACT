@@ -3,6 +3,7 @@ import Image from "../components/global/images/store.jpg";
 import "../components/global/css/RegisterStore.css";
 
 //Componentes
+import ButtonCancel from "../components/global/ButtonCancelStore";
 
 class RegisterStore extends Component {
   constructor(props) {
@@ -54,12 +55,15 @@ class RegisterStore extends Component {
                   <label className="card-text size">Fecha de Apertura:</label>
                   <input className="form-control" type="date" id="date" />
                 </div>
+                <div className="form-group">
                 <button
                   className="btn btn-success mt-4"
                   onClick={() => this.addStore()}
                 >
                   Agregar
                 </button>
+                <ButtonCancel/>
+                </div>
               </div>
             </div>
           </div>

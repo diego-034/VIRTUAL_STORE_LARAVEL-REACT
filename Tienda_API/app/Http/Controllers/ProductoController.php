@@ -102,7 +102,7 @@ class ProductoController extends Controller
         }
         if ($request->file('Imagen')) {
             $path = Storage::disk('public')->put('image',$request->file('Imagen'));
-            $product->fill(['Imagen' => asset($path)])->save();
+            $product->fill(['Imagen' => asset('storage/'.$path)])->save();
          }
         $product->Nombre = $request->get("Nombre");
         $product->Descripcion = $request->get("Descripcion");

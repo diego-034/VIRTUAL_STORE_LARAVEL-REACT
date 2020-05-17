@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Image from "../components/global/images/logo.svg";
 import "../components/global/css/RegisterProduct.css";
 //Componentes
+import ButtonCancel from "../components/global/ButtonCancelProduct";
 
 class RegisterStore extends Component {
   constructor(props) {
@@ -93,6 +94,7 @@ class RegisterStore extends Component {
                 >
                   Agregar
                 </button>
+                <ButtonCancel/>
               </div>
             </div>
           </div>

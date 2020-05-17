@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import "../components/global/css/Product.css";
 import Image from "../components/global/images/logo.svg";
 import Button from "../components/global/ButtonProduct";
+import ButtonCancel from "../components/global/ButtonCancelStore";
+
 
 const url = "http://127.0.0.1:8000/api/producto/";
 
@@ -81,7 +83,8 @@ class Product extends Component {
       <div>
         <h1 className="font-weight-bold">Productos</h1>
         <div className="row">
-          <div className="col-md-10">{products}</div>
+          <div className="col-md-2"><ButtonCancel/></div>
+          <div className="col-md-8">{products}</div>
           <div className="col-md-2">
             <Button />
           </div>

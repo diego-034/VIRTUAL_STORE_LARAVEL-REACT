@@ -1,7 +1,12 @@
 ***********************REQUISITOS************************
 + PHP >= 7.2.5
++ XAMPP
++ Node JS >= a 8.10
++ npm > a 5.6
++ Composer
 + Verificar requerimientos para instalar laravel
 + Clonar este repositorio
++ Tener conexión a Internet
 *********************************************************
 _________________________________________________________
 INSTRUCCIONES PARA INSTALACIÓN DE LOS RECURSOS NECESARIOS
@@ -10,17 +15,54 @@ _________________________________________________________
 
 *********************************************************
 1.Clonar el repositorio de GitHub
+	"git clone https://github.com/diego-034/TRADA_SOLUTIONS_PRUEBA.git"
 
 2.Instalar las dependencias de Composer
+
 	a.Ir a la página oficial y descargar el 
 	  ejecutable(https://getcomposer.org/download/)
-	b.instalar laravel con composer con el comando
-	  composer global require laravel/installer
-	c.ir a la ruta del repositorio clonado en la
-	  carpeta ________________________
-	d.ejecutar el comando composer install
-	e.verificar si no hay errores
+	b.Instalar laravel por composer con el comando
+	  "composer global require laravel/installer"
+	c.Ir a la ruta del repositorio clonado en la
+	  carpeta Tienda_API
+	d.Ejecutar el comando "composer install"
+	e.Verificar si no hay errores
 
-3.Abrir la consola e ir a la carpeta _________________
-4.Ejecutar la creacion de la base de datos con el comando
-  _____________________________________________________
+3.Instalar las dependencias de Node en el Proyecto de React JS
+
+	a.Ir a la página oficial y descargar el 
+	  ejecutable(https://nodejs.org/es/download/)
+	b.Ir a la ruta del repositorio clonado en la
+	  carpeta my_tienda
+	c.Ejecutar el comando "npm install"
+	e.Verificar si no hay errores
+
+4.Crear la base de datos en MySQL con el nombre db_tienda_api
+
+5.Entrar a la carpeta Tienda_API y configurar el archivo .env
+  como el archivo .env.example
+
+6.Ejecutar las migraciones en laravel
+	a.Entrar a la ruta de la carpeta Tienda_API y ejecutar 
+	  el comando "php artisan migrate:fresh"
+	b.Verificar si se ejecutaron sin problemas
+
+7.Verificar que laravel se ejecute en el puerto 8000
+
+8.Verificar que MySQL se ejecute en el puerto 3306
+
+9.Iniciar MySQL desde XAMPP Control
+
+10.Iniciar laravel 
+	a.Ir a la ruta de la carpeta Tienda_API 
+	b.Ejecutar "php artisan serve"
+	c.Verificar si no hay errores
+
+11.Iniciar React JS 
+	a.Ir a la ruta de la carpeta my_tienda
+	b.Ejecutar "npm start"
+	c.Verificar si no hay errores
+
+12.Abrir el localhost:3000 para usar el aplicativo 
+   con la API de laravel
+____________________________________________________

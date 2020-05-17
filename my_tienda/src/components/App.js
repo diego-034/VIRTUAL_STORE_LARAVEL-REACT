@@ -8,6 +8,7 @@ import RegisterStore from "../pages/RegisterStore";
 import UpdateStore from "../pages/UpdateStore";
 import RegisterProduct from "../pages/RegisterProduct";
 import UpdateProduct from "../pages/UpdateProduct";
+import Logs from "../pages/Logs";
 
 function App() {
   return (
@@ -20,6 +21,8 @@ function App() {
           <Route exact path="/tienda/:storeId" component={UpdateStore} />
           <Route exact path="/registroProducto/:storeId" component={RegisterProduct} />
           <Route exact path="/editarProducto/:productId" component={UpdateProduct} />
+          <Route exact path="/logs" component={Logs} />
+
         </Switch>
       </BrowserRouter>
     </div>

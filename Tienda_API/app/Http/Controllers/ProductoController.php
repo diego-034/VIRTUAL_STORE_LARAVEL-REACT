@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Producto;
+use App\log;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
@@ -22,6 +23,7 @@ class ProductoController extends Controller
         if ($data['product'] == null) {
             return $this->SendError("error al consultar los productos");
         }
+        log::create(['Nombre' => 'GET']);
         return $this->SendResponse($data, "productos existentes");
     }
 
@@ -45,6 +47,7 @@ class ProductoController extends Controller
         if ($validator->fails()) {
             return $this->SendError("error de validación", $validator->errors(), 422);
         }
+        log::create(['Nombre' => 'POST']);
         $input = $request->all();
         $data = Producto::create($input);
        
@@ -68,6 +71,7 @@ class ProductoController extends Controller
         if ($product == null) {
             return $this->SendError("no existe el producto", ["no hay productos en esta tienda"], 422);
         }
+        log::create(['Nombre' => 'GET']);
         return $this->SendResponse($product, "Producto");
     }
     public function show($storeId)
@@ -76,6 +80,8 @@ class ProductoController extends Controller
         if ($products->count() == 0) {
             return $this->SendError("no hay productos", ["no hay productos en esta tienda"], 422);
         }
+        log::create(['Nombre' => 'GET']);
+
         return $this->SendResponse($products, "Productos de la tienda");
     }
 
@@ -104,6 +110,8 @@ class ProductoController extends Controller
             $path = Storage::disk('public')->put('image',$request->file('Imagen'));
             $product->fill(['Imagen' => asset('storage/'.$path)])->save();
          }
+         log::create(['Nombre' => 'POST']);
+
         $product->Nombre = $request->get("Nombre");
         $product->Descripcion = $request->get("Descripcion");
         $product->Valor = $request->get("Valor");        
@@ -123,6 +131,8 @@ class ProductoController extends Controller
         if ($product == null) {
             return $this->SendError("error en los datos", ["el producto no existe"], 422);
         }
+        log::create();
+        log::create(['Nombre' => 'DElETE']);
         $product->delete();
         return $this->SendResponse($product, "producto eliminado exitosamente");
     }

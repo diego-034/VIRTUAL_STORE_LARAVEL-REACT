@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Tienda;
+use App\log;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
@@ -21,6 +22,7 @@ class TiendaController extends Controller
         if ($data['stores'] == null) {
             return $this->SendError("error al consultar tiendas");
         }
+        log::create(['Nombre' => 'GET']);
         return $this->SendResponse($data, "tiendas existentes");
     }
 
@@ -39,6 +41,7 @@ class TiendaController extends Controller
         if ($validator->fails()) {
             return $this->SendError("error de validación", $validator->errors(), 422);
         }
+        log::create(['Nombre' => 'POST']);
         $input = $request->all();
         $data = Tienda::create($input);
         return $this->SendResponse($data, "ingreso exitoso de tienda");
@@ -57,6 +60,7 @@ class TiendaController extends Controller
             return $this->SendError("error al buscar tienda",["Error de busquedad 
             , tienda no encontrada"],422);
         }
+        log::create(['Nombre' => 'GET']);
         return $this->SendResponse($store,"tienda encontrada");
     }
 
@@ -80,6 +84,7 @@ class TiendaController extends Controller
         if ($validator->fails()) {
             return $this->SendError("error de validación", $validator->errors(), 422);
         }
+        log::create(['Nombre' => 'PUT']);
         $store->Nombre = $request->get("Nombre");
         $store->FechaApertura = $request->get("FechaApertura");
         $store->save();
@@ -98,6 +103,7 @@ class TiendaController extends Controller
         if ($store == null) {
             return $this->SendError("error en los datos", ["la tienda no existe"], 422);
         }
+        log::create(['Nombre' => 'DElETE']);
         DB::table('productos')->where('IdTienda','=',$tiendaId)->delete();
         $store->delete();
         return $this->SendResponse($store, "eliminación exitosa de la tienda");

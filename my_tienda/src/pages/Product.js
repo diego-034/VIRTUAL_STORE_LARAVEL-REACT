@@ -50,7 +50,7 @@ class Product extends Component {
     if (datas != null) {
       products = datas.map((product) => (
         <div className="card  mb-3 product shadow-lg">
-          <img src={Image} className="card-img-top" />
+          <img src={product.Imagen} className="card-img-top" />
           <div className="card-body">
             <h5 className="card-title">Nombre: {product.Nombre}</h5>
             <p className="card-text">SKU: {product.SKU}</p>

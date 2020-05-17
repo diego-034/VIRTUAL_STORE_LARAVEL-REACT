@@ -105,7 +105,7 @@ class RegisterStore extends Component {
                   className="btn btn-success mt-4"
                   onClick={() => this.updateProduct()}
                 >
-                  Agregar
+                  Actualizar
                 </button>
               </div>
             </div>

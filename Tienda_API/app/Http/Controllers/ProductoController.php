@@ -6,6 +6,7 @@ use App\Producto;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class ProductoController extends Controller
 {
@@ -38,20 +39,21 @@ class ProductoController extends Controller
             'Nombre' => 'required|string',
             'Descripcion' => 'required|string',
             'Valor' => 'required|numeric',
-            'Imagen' => 'required|string',
+            'Imagen' => 'required',
             'IdTienda' => 'required|integer',
         ]);
         if ($validator->fails()) {
             return $this->SendError("error de validación", $validator->errors(), 422);
         }
-        $image = $request->SKU;
-        $oldOrigin = $request->Imagen;
-        $newOrigin = "C:\Users\DIEGO\Documents\TRADA_SOLUTIONS_PRUEBA\Tienda_API\public";
-        copy($oldOrigin,$newOrigin);
-        $request['Imagen'] = $newOrigin;
         $input = $request->all();
         $data = Producto::create($input);
-        return $this->SendResponse($data, "ingreso exitoso de producto");
+       
+        if ($request->file('Imagen')) {
+           $path = Storage::disk('public')->put('image',$request->file('Imagen'));
+           $data->fill(['Imagen' => asset('storage/'.$path)])->save();
+        }
+
+        return $this->SendResponse($input, "ingreso exitoso de producto");
     }
 
     /**
@@ -63,15 +65,15 @@ class ProductoController extends Controller
     public function consultProduct($productId)
     {
         $product = Producto::find($productId);
-        if($product == null){
+        if ($product == null) {
             return $this->SendError("no existe el producto", ["no hay productos en esta tienda"], 422);
         }
         return $this->SendResponse($product, "Producto");
     }
     public function show($storeId)
     {
-        $products = DB::table('productos')->where('IdTienda','=',$storeId)->get();
-        if($products->count() == 0){
+        $products = DB::table('productos')->where('IdTienda', '=', $storeId)->get();
+        if ($products->count() == 0) {
             return $this->SendError("no hay productos", ["no hay productos en esta tienda"], 422);
         }
         return $this->SendResponse($products, "Productos de la tienda");
@@ -84,7 +86,7 @@ class ProductoController extends Controller
      * @param  \App\Producto  $producto
      * @return \Illuminate\Http\Response
      */
-    public function update( Request $request,$productoId)
+    public function update(Request $request, $productoId)
     {
         $product = Producto::find($productoId);
         if ($product == null) {
@@ -93,16 +95,18 @@ class ProductoController extends Controller
         $validator = Validator::make($request->all(), [
             'Nombre' => 'required|string',
             'Descripcion' => 'required|string',
-            'Valor' => 'required|numeric',
-            'Imagen' => 'required|string'
+            'Valor' => 'required|numeric'
         ]);
         if ($validator->fails()) {
             return $this->SendError("error de validación", $validator->errors(), 422);
         }
+        if ($request->file('Imagen')) {
+            $path = Storage::disk('public')->put('image',$request->file('Imagen'));
+            $product->fill(['Imagen' => asset($path)])->save();
+         }
         $product->Nombre = $request->get("Nombre");
         $product->Descripcion = $request->get("Descripcion");
-        $product->Valor = $request->get("Valor");
-        $product->Imagen = $request->get("Imagen");
+        $product->Valor = $request->get("Valor");        
         $product->save();
         return $this->SendResponse($product, "actualización exitosa");
     }

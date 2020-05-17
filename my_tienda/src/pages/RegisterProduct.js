@@ -12,14 +12,15 @@ class RegisterStore extends Component {
     };
   }
   addProduct() {
-    let imageData = document.getElementById("image").value;
+    let imageData = document.getElementById("image").files[0];
     let nameData = document.getElementById("name").value;
     let skuData = document.getElementById("SKU").value;
     let descriptionData = document.getElementById("description").value;
     let valueData = document.getElementById("value").value;
     let idStoreData = this.props.match.params.storeId;
     let url = "http://127.0.0.1:8000/api/producto";
-    let data = new FormData();
+    let data = new FormData();    
+    console.log(imageData);
     data.append("SKU", skuData);
     data.append("Nombre", nameData);
     data.append("Descripcion", descriptionData);
@@ -28,7 +29,7 @@ class RegisterStore extends Component {
     data.append("IdTienda", idStoreData);
     fetch(url, {
       method: "POST",
-      body: data,
+      body: data
     })
       .then((res) => res.json())
       .then(

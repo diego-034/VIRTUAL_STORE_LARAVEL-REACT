@@ -64,6 +64,7 @@
         </style>
     </head>
     <body>
+    
         <div class="flex-center position-ref full-height">
             @if (Route::has('login'))
                 <div class="top-right links">
@@ -83,7 +84,7 @@
                 <div class="title m-b-md">
                     Laravel
                 </div>
-
+                <img src="{{ URL::to('/image') }} " alt="300px" />
                 <div class="links">
                     <a href="https://laravel.com/docs">Docs</a>
                     <a href="https://laracasts.com">Laracasts</a>

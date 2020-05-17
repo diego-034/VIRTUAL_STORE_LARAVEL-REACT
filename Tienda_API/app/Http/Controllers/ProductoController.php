@@ -131,7 +131,6 @@ class ProductoController extends Controller
         if ($product == null) {
             return $this->SendError("error en los datos", ["el producto no existe"], 422);
         }
-        log::create();
         log::create(['Nombre' => 'DElETE']);
         $product->delete();
         return $this->SendResponse($product, "producto eliminado exitosamente");

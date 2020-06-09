@@ -26,7 +26,10 @@ _________________________________________________________
 	c.Ir a la ruta del repositorio clonado en la
 	  carpeta Tienda_API
 	d.Ejecutar el comando "composer install"
-	e.Verificar si no hay errores
+	e.Crear archivo .env
+	f.Copiar las configuraciones del archivo envexample
+	g.Generar key con php artisan key:generate
+	h.Verificar si no hay errores
 
 3.Instalar las dependencias de Node en el Proyecto de React JS
 

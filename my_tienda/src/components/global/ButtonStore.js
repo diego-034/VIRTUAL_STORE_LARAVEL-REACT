@@ -13,8 +13,7 @@ class ButtonStore extends Component {
        <button className="btn btn-primary" onClick={()=> this.activateRoute()}>Agregar Tienda</button>
       </div>
     );
-  }
-  
+  } 
 }
 
 export default withRouter(ButtonStore);
